@@ -1,5 +1,16 @@
 import { useState } from 'react'
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonModal } from '@ionic/react'
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonButtons,
+  IonIcon,
+  IonButton,
+  IonModal,
+} from '@ionic/react'
+import { addOutline } from 'ionicons/icons'
 
 import './Tab1.scss'
 
@@ -21,6 +32,11 @@ const Tab1: React.FC<Props> = ({ router }) => {
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Tab 1</IonTitle>
+            <IonButtons slot="primary" collapse={true}>
+              <IonButton onClick={() => setShowModal(true)}>
+                <IonIcon slot="icon-only" icon={addOutline}></IonIcon>
+              </IonButton>
+            </IonButtons>
           </IonToolbar>
         </IonHeader>
         <IonModal
@@ -33,7 +49,6 @@ const Tab1: React.FC<Props> = ({ router }) => {
           <p>This is modal content</p>
           <IonButton onClick={() => setShowModal(false)}>Close Modal</IonButton>
         </IonModal>
-        <IonButton onClick={() => setShowModal(true)}>ボタン</IonButton>
       </IonContent>
     </IonPage>
   )
