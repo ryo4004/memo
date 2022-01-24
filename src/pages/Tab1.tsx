@@ -3,7 +3,11 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonMod
 
 import './Tab1.scss'
 
-const Tab1: React.FC = () => {
+interface Props {
+  router: HTMLIonRouterOutletElement | null
+}
+
+const Tab1: React.FC<Props> = ({ router }) => {
   const [showModal, setShowModal] = useState(false)
 
   return (
@@ -19,7 +23,13 @@ const Tab1: React.FC = () => {
             <IonTitle size="large">Tab 1</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonModal isOpen={showModal} swipeToClose={true} onDidDismiss={() => setShowModal(false)}>
+        <IonModal
+          isOpen={showModal}
+          swipeToClose={true}
+          presentingElement={router || undefined}
+          showBackdrop={true}
+          onDidDismiss={() => setShowModal(false)}
+        >
           <p>This is modal content</p>
           <IonButton onClick={() => setShowModal(false)}>Close Modal</IonButton>
         </IonModal>
