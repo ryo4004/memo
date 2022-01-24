@@ -8,6 +8,9 @@ import {
   IonButtons,
   IonIcon,
   IonButton,
+  IonItemSliding,
+  IonItemOptions,
+  IonItemOption,
   IonList,
   IonListHeader,
   IonLabel,
@@ -57,6 +60,11 @@ const Tab1: React.FC<Props> = ({ router }) => {
     </IonButtons>
   )
 
+  const removeList = (number: number) => {
+    const newTodoList = todoList.filter((todo, i) => i !== number)
+    setTodoList(newTodoList)
+  }
+
   return (
     <IonPage>
       <IonHeader>
@@ -86,9 +94,16 @@ const Tab1: React.FC<Props> = ({ router }) => {
               <IonLabel>List Header</IonLabel>
             </IonListHeader>
             {todoList.map((todo, i) => (
-              <IonItem key={i}>
-                <IonLabel>{todo}</IonLabel>
-              </IonItem>
+              <IonItemSliding>
+                <IonItem key={'aa' + i}>
+                  <IonLabel>{todo}</IonLabel>
+                </IonItem>
+                <IonItemOptions side="end">
+                  <IonItemOption onClick={() => removeList(i)} color="danger">
+                    削除
+                  </IonItemOption>
+                </IonItemOptions>
+              </IonItemSliding>
             ))}
           </IonList>
         )}
