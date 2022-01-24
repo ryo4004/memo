@@ -8,13 +8,13 @@ import {
   IonButtons,
   IonIcon,
   IonButton,
-  IonModal,
   IonList,
   IonListHeader,
   IonLabel,
   IonItem,
 } from '@ionic/react'
 import { addOutline } from 'ionicons/icons'
+import { Modal } from '../components/Modal'
 
 import './Tab1.scss'
 
@@ -23,7 +23,8 @@ interface Props {
 }
 
 const Tab1: React.FC<Props> = ({ router }) => {
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState<boolean>(false)
+  const modalProps = { showModal, router, setShowModal }
 
   return (
     <IonPage>
@@ -44,16 +45,7 @@ const Tab1: React.FC<Props> = ({ router }) => {
           </IonToolbar>
         </IonHeader>
 
-        <IonModal
-          isOpen={showModal}
-          swipeToClose={true}
-          presentingElement={router || undefined}
-          showBackdrop={true}
-          onDidDismiss={() => setShowModal(false)}
-        >
-          <p>This is modal content</p>
-          <IonButton onClick={() => setShowModal(false)}>Close Modal</IonButton>
-        </IonModal>
+        <Modal {...modalProps} />
 
         <IonList>
           <IonListHeader>
