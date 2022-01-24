@@ -26,22 +26,27 @@ const Tab1: React.FC<Props> = ({ router }) => {
   const [showModal, setShowModal] = useState<boolean>(false)
   const modalProps = { showModal, router, setShowModal }
 
+  const addButton = (
+    <IonButtons slot="primary" collapse={true}>
+      <IonButton onClick={() => setShowModal(true)}>
+        <IonIcon slot="icon-only" icon={addOutline}></IonIcon>
+      </IonButton>
+    </IonButtons>
+  )
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Tab 1</IonTitle>
+          {addButton}
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Tab 1</IonTitle>
-            <IonButtons slot="primary" collapse={true}>
-              <IonButton onClick={() => setShowModal(true)}>
-                <IonIcon slot="icon-only" icon={addOutline}></IonIcon>
-              </IonButton>
-            </IonButtons>
+            {addButton}
           </IonToolbar>
         </IonHeader>
 
