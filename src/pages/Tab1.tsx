@@ -26,6 +26,8 @@ const Tab1: React.FC<Props> = ({ router }) => {
   const [showModal, setShowModal] = useState<boolean>(false)
   const modalProps = { showModal, router, setShowModal }
 
+  const title = 'やることリスト'
+
   const addButton = (
     <IonButtons slot="primary" collapse={true}>
       <IonButton onClick={() => setShowModal(true)}>
@@ -38,14 +40,14 @@ const Tab1: React.FC<Props> = ({ router }) => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Tab 1</IonTitle>
+          <IonTitle>{title}</IonTitle>
           {addButton}
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Tab 1</IonTitle>
+            <IonTitle size="large">{title}</IonTitle>
             {addButton}
           </IonToolbar>
         </IonHeader>
