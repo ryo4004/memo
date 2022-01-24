@@ -3,11 +3,12 @@ import { IonButton, IonModal } from '@ionic/react'
 type Props = {
   router: HTMLIonRouterOutletElement | null
   showModal: boolean
+  component: React.ReactNode
   setShowModal: (request: boolean) => void
 }
 
 export const Modal = (props: Props) => {
-  const { showModal, router, setShowModal } = props
+  const { showModal, router, component, setShowModal } = props
   return (
     <IonModal
       isOpen={showModal}
@@ -16,7 +17,7 @@ export const Modal = (props: Props) => {
       showBackdrop={true}
       onDidDismiss={() => setShowModal(false)}
     >
-      <p>This is modal content</p>
+      {component}
       <IonButton onClick={() => setShowModal(false)}>Close Modal</IonButton>
     </IonModal>
   )

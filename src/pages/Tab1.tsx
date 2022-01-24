@@ -12,6 +12,7 @@ import {
   IonListHeader,
   IonLabel,
   IonItem,
+  IonInput,
 } from '@ionic/react'
 import { addOutline } from 'ionicons/icons'
 import { Modal } from '../components/Modal'
@@ -23,8 +24,28 @@ interface Props {
 }
 
 const Tab1: React.FC<Props> = ({ router }) => {
+  const [todoList, setTodoList] = useState<Array<string>>([])
+  const [todoInput, setTodoInput] = useState<string>('')
   const [showModal, setShowModal] = useState<boolean>(false)
-  const modalProps = { showModal, router, setShowModal }
+
+  const component = (
+    <>
+      <IonItem>
+        <IonInput value={todoInput} onIonChange={(e) => setTodoInput(e.detail.value!)} />
+      </IonItem>
+      <IonButton
+        onClick={() => {
+          todoInput !== '' && setTodoList([...todoList, todoInput])
+          setTodoInput('')
+          setShowModal(false)
+        }}
+      >
+        追加
+      </IonButton>
+    </>
+  )
+
+  const modalProps = { showModal, router, component, setShowModal }
 
   const title = 'やることリスト'
 
@@ -54,16 +75,23 @@ const Tab1: React.FC<Props> = ({ router }) => {
 
         <Modal {...modalProps} />
 
-        <IonList>
-          <IonListHeader>
-            <IonLabel>List Header</IonLabel>
-          </IonListHeader>
-          {Array.from(new Array(20)).map((num, i) => (
-            <IonItem key={i}>
-              <IonLabel>{i}</IonLabel>
-            </IonItem>
-          ))}
-        </IonList>
+        {todoList.length === 0 && (
+          <IonItem>
+            <IonLabel>なにもありません</IonLabel>
+          </IonItem>
+        )}
+        {todoList.length !== 0 && (
+          <IonList>
+            <IonListHeader>
+              <IonLabel>List Header</IonLabel>
+            </IonListHeader>
+            {todoList.map((todo, i) => (
+              <IonItem key={i}>
+                <IonLabel>{todo}</IonLabel>
+              </IonItem>
+            ))}
+          </IonList>
+        )}
       </IonContent>
     </IonPage>
   )
