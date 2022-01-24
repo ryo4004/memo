@@ -9,6 +9,10 @@ import {
   IonIcon,
   IonButton,
   IonModal,
+  IonList,
+  IonListHeader,
+  IonLabel,
+  IonItem,
 } from '@ionic/react'
 import { addOutline } from 'ionicons/icons'
 
@@ -39,6 +43,7 @@ const Tab1: React.FC<Props> = ({ router }) => {
             </IonButtons>
           </IonToolbar>
         </IonHeader>
+
         <IonModal
           isOpen={showModal}
           swipeToClose={true}
@@ -49,6 +54,17 @@ const Tab1: React.FC<Props> = ({ router }) => {
           <p>This is modal content</p>
           <IonButton onClick={() => setShowModal(false)}>Close Modal</IonButton>
         </IonModal>
+
+        <IonList>
+          <IonListHeader>
+            <IonLabel>List Header</IonLabel>
+          </IonListHeader>
+          {Array.from(new Array(20)).map((num, i) => (
+            <IonItem key={i}>
+              <IonLabel>{i}</IonLabel>
+            </IonItem>
+          ))}
+        </IonList>
       </IonContent>
     </IonPage>
   )
