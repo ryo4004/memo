@@ -29,13 +29,13 @@ interface Props {
 }
 
 const Tab1: React.FC<Props> = ({ router }) => {
-  const { todoList, addTodo, removeTodo, todoInput, setTodoInput } = useTodo()
+  const { todoList, addTodo, removeTodo, todoInput, updateTodoInput } = useTodo()
   const [showModal, setShowModal] = useState<boolean>(false)
 
   const component = (
     <>
       <IonItem>
-        <IonInput value={todoInput} onIonChange={(e) => setTodoInput(e.detail.value!)} />
+        <IonInput value={todoInput} onIonChange={(e) => updateTodoInput(e.detail.value)} />
       </IonItem>
       <IonButton
         onClick={() => {
