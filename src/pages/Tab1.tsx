@@ -20,6 +20,8 @@ import {
 import { addOutline } from 'ionicons/icons'
 import { Modal } from '../components/Modal'
 
+import { useTodo } from '../hooks/useTodo'
+
 import './Tab1.scss'
 
 interface Props {
@@ -27,8 +29,7 @@ interface Props {
 }
 
 const Tab1: React.FC<Props> = ({ router }) => {
-  const [todoList, setTodoList] = useState<Array<string>>([])
-  const [todoInput, setTodoInput] = useState<string>('')
+  const { todoList, addTodo, removeTodo, todoInput, setTodoInput } = useTodo()
   const [showModal, setShowModal] = useState<boolean>(false)
 
   const component = (
@@ -38,8 +39,7 @@ const Tab1: React.FC<Props> = ({ router }) => {
       </IonItem>
       <IonButton
         onClick={() => {
-          todoInput !== '' && setTodoList([...todoList, todoInput])
-          setTodoInput('')
+          addTodo()
           setShowModal(false)
         }}
       >
@@ -60,9 +60,8 @@ const Tab1: React.FC<Props> = ({ router }) => {
     </IonButtons>
   )
 
-  const removeList = (number: number) => {
-    const newTodoList = todoList.filter((todo, i) => i !== number)
-    setTodoList(newTodoList)
+  const removeList = (id: string) => {
+    removeTodo(id)
   }
 
   return (
@@ -93,13 +92,13 @@ const Tab1: React.FC<Props> = ({ router }) => {
             <IonListHeader>
               <IonLabel>List Header</IonLabel>
             </IonListHeader>
-            {todoList.map((todo, i) => (
+            {todoList.map((todo) => (
               <IonItemSliding>
-                <IonItem key={'aa' + i}>
-                  <IonLabel>{todo}</IonLabel>
+                <IonItem key={todo.id}>
+                  <IonLabel>{todo.label}</IonLabel>
                 </IonItem>
                 <IonItemOptions side="end">
-                  <IonItemOption onClick={() => removeList(i)} color="danger">
+                  <IonItemOption onClick={() => removeList(todo.id)} color="danger">
                     削除
                   </IonItemOption>
                 </IonItemOptions>
