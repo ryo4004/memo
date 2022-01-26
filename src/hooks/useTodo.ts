@@ -7,13 +7,17 @@ type Todo = {
 
 export const useTodo = () => {
   const [todoList, setTodoList] = useState<Array<Todo>>([])
+  const [todoInput, setTodoInput] = useState<string>('')
 
-  const addTodo = (label: string) => {
-    const newTodo = {
-      id: String(new Date().getTime()),
-      label,
+  const addTodo = () => {
+    if (todoInput !== '') {
+      const newTodo = {
+        id: String(new Date().getTime()),
+        label: todoInput,
+      }
+      setTodoList([...todoList, newTodo])
+      setTodoInput('')
     }
-    setTodoList([...todoList, newTodo])
   }
 
   const removeTodo = (id: string) => {
@@ -21,5 +25,5 @@ export const useTodo = () => {
     setTodoList(newTodoList)
   }
 
-  return { todoList, addTodo, removeTodo }
+  return { todoList, addTodo, removeTodo, todoInput, setTodoInput }
 }
