@@ -11,8 +11,13 @@ import {
   IonToolbar,
   // useIonViewWillEnter,
 } from '@ionic/react'
+import { useParams } from 'react-router'
 
 export const Detail = () => {
+  const params = useParams<{ id: string }>()
+
+  const id = params.id
+
   return (
     <IonPage>
       <IonHeader>
@@ -24,7 +29,7 @@ export const Detail = () => {
       </IonHeader>
 
       <IonContent fullscreen>
-        <div>Message not found</div>
+        <div>{id ? id : 'not found'}</div>
       </IonContent>
     </IonPage>
   )
