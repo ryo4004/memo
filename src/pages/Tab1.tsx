@@ -93,8 +93,8 @@ const Tab1: React.FC<Props> = ({ router }) => {
               <IonLabel>List Header</IonLabel>
             </IonListHeader>
             {todoList.map((todo) => (
-              <IonItemSliding>
-                <IonItem key={todo.id}>
+              <IonItemSliding key={todo.id}>
+                <IonItem routerLink={'/detail/' + todo.id}>
                   <IonLabel>{todo.label}</IonLabel>
                 </IonItem>
                 <IonItemOptions side="end">
