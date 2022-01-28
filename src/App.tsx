@@ -12,10 +12,10 @@ import {
 } from '@ionic/react'
 import { IonReactRouter } from '@ionic/react-router'
 import { albums, list, cog } from 'ionicons/icons'
-import { TodoList } from './pages/TodoList'
-import { Stock } from './pages/Stock'
-import {Settings} from './pages/Settings'
-import { Detail } from './pages/Detail'
+import { TodoList } from './pages/TodoList/TodoList'
+import { Stock } from './pages/Stock/Stock'
+import { Settings } from './pages/Settings/Settings'
+import { Detail } from './pages/TodoList/Detail/Detail'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css'

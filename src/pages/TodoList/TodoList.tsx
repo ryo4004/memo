@@ -18,9 +18,9 @@ import {
   IonInput,
 } from '@ionic/react'
 import { addOutline } from 'ionicons/icons'
-import { Modal } from '../components/Modal'
+import { Modal } from '../../components/Modal'
 
-import { useTodo } from '../hooks/useTodo'
+import { useTodo } from '../../hooks/useTodo'
 
 import './TodoList.scss'
 
