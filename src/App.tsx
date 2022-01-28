@@ -14,7 +14,7 @@ import { IonReactRouter } from '@ionic/react-router'
 import { albums, list, cog } from 'ionicons/icons'
 import { TodoList } from './pages/TodoList'
 import { Stock } from './pages/Stock'
-import Tab3 from './pages/Tab3'
+import {Settings} from './pages/Settings'
 import { Detail } from './pages/Detail'
 
 /* Core CSS required for Ionic components to work properly */
@@ -56,7 +56,7 @@ const App: React.FC = () => {
               <Stock />
             </Route>
             <Route path="/tab3">
-              <Tab3 />
+              <Settings />
             </Route>
             <Route exact path="/">
               <Redirect to="/tab1" />
