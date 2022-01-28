@@ -18,17 +18,17 @@ import {
   IonInput,
 } from '@ionic/react'
 import { addOutline } from 'ionicons/icons'
-import { Modal } from '../components/Modal'
+import { Modal } from '../../components/Modal'
 
-import { useTodo } from '../hooks/useTodo'
+import { useTodo } from '../../hooks/useTodo'
 
-import './Tab1.scss'
+import './TodoList.scss'
 
 interface Props {
   router: HTMLIonRouterOutletElement | null
 }
 
-const Tab1: React.FC<Props> = ({ router }) => {
+export const TodoList: React.FC<Props> = ({ router }) => {
   const { todoList, addTodo, removeTodo, todoInput, updateTodoInput } = useTodo()
   const [showModal, setShowModal] = useState<boolean>(false)
 
@@ -110,5 +110,3 @@ const Tab1: React.FC<Props> = ({ router }) => {
     </IonPage>
   )
 }
-
-export default Tab1
