@@ -12,7 +12,7 @@ import {
 } from '@ionic/react'
 import { IonReactRouter } from '@ionic/react-router'
 import { albums, list, cog } from 'ionicons/icons'
-import Tab1 from './pages/Tab1'
+import { TodoList } from './pages/TodoList'
 import Tab2 from './pages/Tab2'
 import Tab3 from './pages/Tab3'
 import { Detail } from './pages/Detail'
@@ -50,7 +50,7 @@ const App: React.FC = () => {
               <Detail />
             </Route>
             <Route exact path="/tab1">
-              <Tab1 router={routerRef.current} />
+              <TodoList router={routerRef.current} />
             </Route>
             <Route exact path="/tab2">
               <Tab2 />
