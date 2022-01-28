@@ -3,26 +3,41 @@ import { useState } from 'react'
 type Todo = {
   id: string
   label: string
+  span: number
 }
+
+type TodoInput = {
+  label: string
+  span: string
+}
+
+const initInput = { label: '', span: '' }
 
 export const useTodo = () => {
   const [todoList, setTodoList] = useState<Array<Todo>>([])
-  const [todoInput, setTodoInput] = useState<string>('')
+  const [todoInput, setTodoInput] = useState<TodoInput>(initInput)
 
-  const updateTodoInput = (value: string | null | undefined) => {
+  const updateInputLabel = (value: string | null | undefined) => {
     if (value) {
-      setTodoInput(value)
+      setTodoInput({ ...todoInput, label: value })
+    }
+  }
+
+  const updateInputSpan = (value: string | null | undefined) => {
+    if (value) {
+      setTodoInput({ ...todoInput, span: value })
     }
   }
 
   const addTodo = () => {
-    if (todoInput !== '') {
+    if (todoInput.label !== '') {
       const newTodo = {
         id: String(new Date().getTime()),
-        label: todoInput,
+        label: todoInput.label,
+        span: Number(todoInput.span),
       }
       setTodoList([...todoList, newTodo])
-      setTodoInput('')
+      setTodoInput(initInput)
     }
   }
 
@@ -31,5 +46,5 @@ export const useTodo = () => {
     setTodoList(newTodoList)
   }
 
-  return { todoList, addTodo, removeTodo, todoInput, updateTodoInput }
+  return { todoList, addTodo, removeTodo, todoInput, updateInputLabel, updateInputSpan }
 }
