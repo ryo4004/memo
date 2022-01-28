@@ -13,7 +13,7 @@ import {
 import { IonReactRouter } from '@ionic/react-router'
 import { albums, list, cog } from 'ionicons/icons'
 import { TodoList } from './pages/TodoList'
-import Tab2 from './pages/Tab2'
+import { Stock } from './pages/Stock'
 import Tab3 from './pages/Tab3'
 import { Detail } from './pages/Detail'
 
@@ -53,7 +53,7 @@ const App: React.FC = () => {
               <TodoList router={routerRef.current} />
             </Route>
             <Route exact path="/tab2">
-              <Tab2 />
+              <Stock />
             </Route>
             <Route path="/tab3">
               <Tab3 />

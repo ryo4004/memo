@@ -1,8 +1,8 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react'
 import ExploreContainer from '../components/ExploreContainer'
-import './Tab2.scss'
+import './Stock.scss'
 
-const Tab2: React.FC = () => {
+export const Stock: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
@@ -21,5 +21,3 @@ const Tab2: React.FC = () => {
     </IonPage>
   )
 }
-
-export default Tab2
