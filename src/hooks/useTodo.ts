@@ -42,6 +42,7 @@ export const useTodo = () => {
       }
       setTodoList([...todoList, newTodo])
       setTodoInput(initInput)
+      return true
     }
   }
 

@@ -48,8 +48,9 @@ export const TodoList: React.FC<Props> = ({ router }) => {
       </IonItem>
       <IonButton
         onClick={() => {
-          addTodo()
-          setShowModal(false)
+          if (addTodo()) {
+            setShowModal(false)
+          }
         }}
       >
         追加
