@@ -88,9 +88,9 @@ export const TodoList: React.FC<Props> = ({ router }) => {
         <Modal {...modalProps} />
 
         {todoList.length === 0 && (
-          <IonItem>
-            <IonLabel>なにもありません</IonLabel>
-          </IonItem>
+          <div className={styles.note}>
+            <IonNote>なにもありません</IonNote>
+          </div>
         )}
         {todoList.length !== 0 && (
           <>
@@ -104,7 +104,7 @@ export const TodoList: React.FC<Props> = ({ router }) => {
                   <div>
                     <IonNote>{todo.span}</IonNote>
                   </div>
-                  <div className={styles.date}>
+                  <div>
                     <IonNote>{todo.lastDate && todo.lastDate.toFormat('yyyy/M/d')}</IonNote>
                   </div>
                 </IonCardContent>
