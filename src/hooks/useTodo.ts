@@ -1,19 +1,22 @@
 import { useState } from 'react'
+import { DateTime } from 'luxon'
 
 type Todo = {
   id: string
   label: string
   span: number
+  lastDate: DateTime
 }
 
 type TodoInput = {
   label: string
   span: string
+  lastDate: string
 }
 
 type InputType = keyof TodoInput
 
-const initInput: TodoInput = { label: '', span: '' }
+const initInput: TodoInput = { label: '', span: '', lastDate: '' }
 
 export const useTodo = () => {
   const [todoList, setTodoList] = useState<Array<Todo>>([])
@@ -35,6 +38,7 @@ export const useTodo = () => {
         id: String(new Date().getTime()),
         label: todoInput.label,
         span: Number(todoInput.span),
+        lastDate: DateTime.fromFormat(todoInput.lastDate, 'yyyy-M-d'),
       }
       setTodoList([...todoList, newTodo])
       setTodoInput(initInput)
