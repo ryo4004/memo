@@ -49,29 +49,29 @@ const App: React.FC = () => {
             <Route path="/detail/:id">
               <Detail />
             </Route>
-            <Route exact path="/tab1">
+            <Route exact path="/todolist">
               <TodoList router={routerRef.current} />
             </Route>
-            <Route exact path="/tab2">
+            <Route exact path="/stocklist">
               <Stock />
             </Route>
-            <Route path="/tab3">
+            <Route path="/settings">
               <Settings />
             </Route>
             <Route exact path="/">
-              <Redirect to="/tab1" />
+              <Redirect to="/todolist" />
             </Route>
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
-            <IonTabButton tab="tab1" href="/tab1">
+            <IonTabButton tab="todolist" href="/todolist">
               <IonIcon icon={albums} />
               <IonLabel>やることリスト</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="tab2" href="/tab2">
+            <IonTabButton tab="stocklist" href="/stocklist">
               <IonIcon icon={list} />
               <IonLabel>ものリスト</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="tab3" href="/tab3">
+            <IonTabButton tab="settings" href="/settings">
               <IonIcon icon={cog} />
               <IonLabel>設定</IonLabel>
             </IonTabButton>
