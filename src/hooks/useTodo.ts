@@ -1,28 +1,48 @@
 import { useState } from 'react'
+import { DateTime } from 'luxon'
 
 type Todo = {
   id: string
   label: string
+  span: number
+  lastDate: DateTime
 }
+
+type TodoInput = {
+  label: string
+  span: string
+  lastDate: string
+}
+
+type InputType = keyof TodoInput
+
+const initInput: TodoInput = { label: '', span: '', lastDate: '' }
 
 export const useTodo = () => {
   const [todoList, setTodoList] = useState<Array<Todo>>([])
-  const [todoInput, setTodoInput] = useState<string>('')
+  const [todoInput, setTodoInput] = useState<TodoInput>(initInput)
 
-  const updateTodoInput = (value: string | null | undefined) => {
+  const updateInput = (type: InputType, value: string | null | undefined) => {
     if (value) {
-      setTodoInput(value)
+      const newInput = {
+        ...todoInput,
+        [type]: value,
+      }
+      setTodoInput(newInput)
     }
   }
 
   const addTodo = () => {
-    if (todoInput !== '') {
+    if (todoInput.label !== '') {
       const newTodo = {
         id: String(new Date().getTime()),
-        label: todoInput,
+        label: todoInput.label,
+        span: Number(todoInput.span),
+        lastDate: DateTime.fromFormat(todoInput.lastDate, 'yyyy-M-d'),
       }
       setTodoList([...todoList, newTodo])
-      setTodoInput('')
+      setTodoInput(initInput)
+      return true
     }
   }
 
@@ -31,5 +51,5 @@ export const useTodo = () => {
     setTodoList(newTodoList)
   }
 
-  return { todoList, addTodo, removeTodo, todoInput, updateTodoInput }
+  return { todoList, addTodo, removeTodo, todoInput, updateInput }
 }

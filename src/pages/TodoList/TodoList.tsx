@@ -29,18 +29,28 @@ interface Props {
 }
 
 export const TodoList: React.FC<Props> = ({ router }) => {
-  const { todoList, addTodo, removeTodo, todoInput, updateTodoInput } = useTodo()
+  const { todoList, addTodo, removeTodo, todoInput, updateInput } = useTodo()
   const [showModal, setShowModal] = useState<boolean>(false)
 
   const component = (
     <>
       <IonItem>
-        <IonInput value={todoInput} onIonChange={(e) => updateTodoInput(e.detail.value)} />
+        <IonLabel position="stacked">タイトル</IonLabel>
+        <IonInput type="text" value={todoInput.label} onIonChange={(e) => updateInput('label', e.detail.value)} />
+      </IonItem>
+      <IonItem>
+        <IonLabel position="stacked">間隔</IonLabel>
+        <IonInput type="number" value={todoInput.span} onIonChange={(e) => updateInput('span', e.detail.value)} />
+      </IonItem>
+      <IonItem>
+        <IonLabel position="stacked">最後の実施日</IonLabel>
+        <IonInput type="date" value={todoInput.lastDate} onIonChange={(e) => updateInput('lastDate', e.detail.value)} />
       </IonItem>
       <IonButton
         onClick={() => {
-          addTodo()
-          setShowModal(false)
+          if (addTodo()) {
+            setShowModal(false)
+          }
         }}
       >
         追加
