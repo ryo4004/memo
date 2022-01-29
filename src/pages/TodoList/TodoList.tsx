@@ -8,11 +8,6 @@ import {
   IonButtons,
   IonIcon,
   IonButton,
-  IonItemSliding,
-  IonItemOptions,
-  IonItemOption,
-  IonList,
-  IonListHeader,
   IonLabel,
   IonItem,
   IonInput,
@@ -22,14 +17,14 @@ import { Modal } from '../../components/Modal'
 
 import { useTodo } from '../../hooks/useTodo'
 
-import './TodoList.scss'
+import styles from './TodoList.module.scss'
 
 interface Props {
   router: HTMLIonRouterOutletElement | null
 }
 
 export const TodoList: React.FC<Props> = ({ router }) => {
-  const { todoList, addTodo, removeTodo, todoInput, updateInput } = useTodo()
+  const { todoList, addTodo, todoInput, updateInput } = useTodo()
   const [showModal, setShowModal] = useState<boolean>(false)
 
   const component = (
@@ -70,10 +65,6 @@ export const TodoList: React.FC<Props> = ({ router }) => {
     </IonButtons>
   )
 
-  const removeList = (id: string) => {
-    removeTodo(id)
-  }
-
   return (
     <IonPage>
       <IonHeader>
@@ -98,23 +89,14 @@ export const TodoList: React.FC<Props> = ({ router }) => {
           </IonItem>
         )}
         {todoList.length !== 0 && (
-          <IonList>
-            <IonListHeader>
-              <IonLabel>List Header</IonLabel>
-            </IonListHeader>
+          <>
             {todoList.map((todo) => (
-              <IonItemSliding key={todo.id}>
-                <IonItem routerLink={'/detail/' + todo.id}>
-                  <IonLabel>{todo.label}</IonLabel>
-                </IonItem>
-                <IonItemOptions side="end">
-                  <IonItemOption onClick={() => removeList(todo.id)} color="danger">
-                    削除
-                  </IonItemOption>
-                </IonItemOptions>
-              </IonItemSliding>
+              <IonItem key={todo.id} routerLink={'/detail/' + todo.id}>
+                <IonLabel>{todo.label}</IonLabel>
+                <div className={styles.list}>sample</div>
+              </IonItem>
             ))}
-          </IonList>
+          </>
         )}
       </IonContent>
     </IonPage>
