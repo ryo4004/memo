@@ -11,21 +11,21 @@ type TodoInput = {
   span: string
 }
 
-const initInput = { label: '', span: '' }
+type InputType = keyof TodoInput
+
+const initInput: TodoInput = { label: '', span: '' }
 
 export const useTodo = () => {
   const [todoList, setTodoList] = useState<Array<Todo>>([])
   const [todoInput, setTodoInput] = useState<TodoInput>(initInput)
 
-  const updateInputLabel = (value: string | null | undefined) => {
+  const updateInput = (type: InputType, value: string | null | undefined) => {
     if (value) {
-      setTodoInput({ ...todoInput, label: value })
-    }
-  }
-
-  const updateInputSpan = (value: string | null | undefined) => {
-    if (value) {
-      setTodoInput({ ...todoInput, span: value })
+      const newInput = {
+        ...todoInput,
+        [type]: value,
+      }
+      setTodoInput(newInput)
     }
   }
 
@@ -46,5 +46,5 @@ export const useTodo = () => {
     setTodoList(newTodoList)
   }
 
-  return { todoList, addTodo, removeTodo, todoInput, updateInputLabel, updateInputSpan }
+  return { todoList, addTodo, removeTodo, todoInput, updateInput }
 }
