@@ -27,10 +27,7 @@ export const Modal = (props: Props) => {
             </IonButtons>
           </IonToolbar>
         </IonHeader>
-        <IonContent fullscreen>
-          {component}
-          <IonButton onClick={() => setShowModal(false)}>Close Modal</IonButton>
-        </IonContent>
+        <IonContent>{component}</IonContent>
       </IonPage>
     </IonModal>
   )

@@ -51,6 +51,7 @@ export const TodoList: React.FC<Props> = ({ router }) => {
             setShowModal(false)
           }
         }}
+        expand="block"
       >
         追加
       </IonButton>
