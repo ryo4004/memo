@@ -12,6 +12,7 @@ import {
   // useIonViewWillEnter,
   IonNote,
   IonButton,
+  useIonAlert,
 } from '@ionic/react'
 import { useParams } from 'react-router'
 
@@ -23,8 +24,10 @@ export const Detail = () => {
   const params = useParams<{ id: string }>()
   const id = Number(params.id)
 
-  const { todoList } = useTodoContext()
+  const { todoList, removeTodo } = useTodoContext()
   const todo = todoList.find((todo) => todo.id === id)
+
+  const [present] = useIonAlert()
 
   return (
     <IonPage>
@@ -47,7 +50,20 @@ export const Detail = () => {
             <div>{todo.label}</div>
             <div>{todo.span}</div>
             <div>{todo.lastDate ? todo.lastDate.toFormat('yyyy/M/d') : 'なし'}</div>
-            <IonButton expand="block" fill="outline" color="danger">
+            <IonButton
+              onClick={() =>
+                present({
+                  cssClass: 'alert',
+                  header: '削除しますか？',
+                  message: '特になし',
+                  buttons: ['キャンセル', { text: '削除する', handler: () => removeTodo(todo.id) }],
+                  onDidDismiss: () => null,
+                })
+              }
+              expand="block"
+              fill="outline"
+              color="danger"
+            >
               削除
             </IonButton>
           </>
