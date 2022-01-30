@@ -49,9 +49,7 @@ const App: React.FC = () => {
             <Route path="/detail/:id">
               <Detail />
             </Route>
-            <Route exact path="/todolist">
-              <TodoList router={routerRef.current} />
-            </Route>
+            <Route exact path="/todolist" render={() => <TodoList router={routerRef.current} />} />
             <Route exact path="/stocklist">
               <Stock />
             </Route>
