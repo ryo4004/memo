@@ -3,12 +3,12 @@ import { IonModal, IonPage, IonHeader, IonToolbar, IonTitle, IonButtons, IonButt
 type Props = {
   router: HTMLIonRouterOutletElement | null
   showModal: boolean
-  component: React.ReactNode
   setShowModal: (request: boolean) => void
+  children: React.ReactNode
 }
 
 export const Modal = (props: Props) => {
-  const { showModal, router, component, setShowModal } = props
+  const { showModal, router, setShowModal, children } = props
   return (
     <IonModal
       isOpen={showModal}
@@ -27,7 +27,7 @@ export const Modal = (props: Props) => {
             </IonButtons>
           </IonToolbar>
         </IonHeader>
-        <IonContent>{component}</IonContent>
+        <IonContent>{children}</IonContent>
       </IonPage>
     </IonModal>
   )

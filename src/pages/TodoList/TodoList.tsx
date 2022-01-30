@@ -10,14 +10,13 @@ import {
   IonButton,
   IonLabel,
   IonItem,
-  IonInput,
   IonCard,
   IonCardContent,
   IonNote,
 } from '@ionic/react'
 import { addOutline } from 'ionicons/icons'
 
-import { Modal } from '../../components/Modal'
+import { AddModal } from './AddModal/AddModal'
 
 import { useTodoContext } from '../../hooks/useTodo'
 
@@ -28,37 +27,8 @@ interface Props {
 }
 
 export const TodoList: React.FC<Props> = ({ router }) => {
-  const { todoList, addTodo, todoInput, updateInput } = useTodoContext()
+  const { todoList } = useTodoContext()
   const [showModal, setShowModal] = useState<boolean>(false)
-
-  const component = (
-    <>
-      <IonItem>
-        <IonLabel position="stacked">タイトル</IonLabel>
-        <IonInput type="text" value={todoInput.label} onIonChange={(e) => updateInput('label', e.detail.value)} />
-      </IonItem>
-      <IonItem>
-        <IonLabel position="stacked">間隔</IonLabel>
-        <IonInput type="number" value={todoInput.span} onIonChange={(e) => updateInput('span', e.detail.value)} />
-      </IonItem>
-      <IonItem>
-        <IonLabel position="stacked">最後の実施日</IonLabel>
-        <IonInput type="date" value={todoInput.lastDate} onIonChange={(e) => updateInput('lastDate', e.detail.value)} />
-      </IonItem>
-      <IonButton
-        onClick={() => {
-          if (addTodo()) {
-            setShowModal(false)
-          }
-        }}
-        expand="block"
-      >
-        追加
-      </IonButton>
-    </>
-  )
-
-  const modalProps = { showModal, router, component, setShowModal }
 
   const title = 'やることリスト'
 
@@ -86,33 +56,30 @@ export const TodoList: React.FC<Props> = ({ router }) => {
           </IonToolbar>
         </IonHeader>
 
-        <Modal {...modalProps} />
+        <AddModal router={router} showModal={showModal} setShowModal={setShowModal} />
 
         {todoList.length === 0 && (
           <div className={styles.note}>
             <IonNote>なにもありません</IonNote>
           </div>
         )}
-        {todoList.length !== 0 && (
-          <>
-            {todoList.map((todo) => (
-              <IonCard key={todo.id} routerLink={'/detail/' + todo.id}>
-                <IonItem>
-                  <IonLabel>{todo.label}</IonLabel>
-                </IonItem>
+        {todoList.length !== 0 &&
+          todoList.map((todo) => (
+            <IonCard key={todo.id} routerLink={'/detail/' + todo.id}>
+              <IonItem>
+                <IonLabel>{todo.label}</IonLabel>
+              </IonItem>
 
-                <IonCardContent>
-                  <div>
-                    <IonNote>{todo.span}</IonNote>
-                  </div>
-                  <div>
-                    <IonNote>{todo.lastDate && todo.lastDate.toFormat('yyyy/M/d')}</IonNote>
-                  </div>
-                </IonCardContent>
-              </IonCard>
-            ))}
-          </>
-        )}
+              <IonCardContent>
+                <div>
+                  <IonNote>{todo.span}</IonNote>
+                </div>
+                <div>
+                  <IonNote>{todo.lastDate && todo.lastDate.toFormat('yyyy/M/d')}</IonNote>
+                </div>
+              </IonCardContent>
+            </IonCard>
+          ))}
       </IonContent>
     </IonPage>
   )
