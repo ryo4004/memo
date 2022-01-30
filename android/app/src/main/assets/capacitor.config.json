@@ -1,0 +1,6 @@
+{
+	"appId": "com.zatsuzen.memo",
+	"appName": "memo",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}
