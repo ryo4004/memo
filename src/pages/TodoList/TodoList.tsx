@@ -19,7 +19,7 @@ import { addOutline } from 'ionicons/icons'
 
 import { Modal } from '../../components/Modal'
 
-import { useTodo } from '../../hooks/useTodo'
+import { useTodoContext } from '../../hooks/useTodo'
 
 import styles from './TodoList.module.scss'
 
@@ -28,7 +28,7 @@ interface Props {
 }
 
 export const TodoList: React.FC<Props> = ({ router }) => {
-  const { todoList, addTodo, todoInput, updateInput } = useTodo()
+  const { todoList, addTodo, todoInput, updateInput } = useTodoContext()
   const [showModal, setShowModal] = useState<boolean>(false)
 
   const component = (

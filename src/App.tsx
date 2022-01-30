@@ -17,6 +17,8 @@ import { Stock } from './pages/Stock/Stock'
 import { Settings } from './pages/Settings/Settings'
 import { Detail } from './pages/TodoList/Detail/Detail'
 
+import { useTodo, TodoContext } from './hooks/useTodo'
+
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css'
 
@@ -43,41 +45,48 @@ const App: React.FC = () => {
 
   return (
     <IonApp>
-      <IonReactRouter>
-        <IonTabs>
-          <IonRouterOutlet ref={routerRef}>
-            <Route path="/detail/:id">
-              <Detail />
-            </Route>
-            <Route exact path="/todolist" render={() => <TodoList router={routerRef.current} />} />
-            <Route exact path="/stocklist">
-              <Stock />
-            </Route>
-            <Route path="/settings">
-              <Settings />
-            </Route>
-            <Route exact path="/">
-              <Redirect to="/todolist" />
-            </Route>
-          </IonRouterOutlet>
-          <IonTabBar slot="bottom">
-            <IonTabButton tab="todolist" href="/todolist">
-              <IonIcon icon={albums} />
-              <IonLabel>やることリスト</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="stocklist" href="/stocklist">
-              <IonIcon icon={list} />
-              <IonLabel>ものリスト</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="settings" href="/settings">
-              <IonIcon icon={cog} />
-              <IonLabel>設定</IonLabel>
-            </IonTabButton>
-          </IonTabBar>
-        </IonTabs>
-      </IonReactRouter>
+      <TodoProvider>
+        <IonReactRouter>
+          <IonTabs>
+            <IonRouterOutlet ref={routerRef}>
+              <Route path="/detail/:id">
+                <Detail />
+              </Route>
+              <Route exact path="/todolist" render={() => <TodoList router={routerRef.current} />} />
+              <Route exact path="/stocklist">
+                <Stock />
+              </Route>
+              <Route path="/settings">
+                <Settings />
+              </Route>
+              <Route exact path="/">
+                <Redirect to="/todolist" />
+              </Route>
+            </IonRouterOutlet>
+            <IonTabBar slot="bottom">
+              <IonTabButton tab="todolist" href="/todolist">
+                <IonIcon icon={albums} />
+                <IonLabel>やることリスト</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="stocklist" href="/stocklist">
+                <IonIcon icon={list} />
+                <IonLabel>ものリスト</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="settings" href="/settings">
+                <IonIcon icon={cog} />
+                <IonLabel>設定</IonLabel>
+              </IonTabButton>
+            </IonTabBar>
+          </IonTabs>
+        </IonReactRouter>
+      </TodoProvider>
     </IonApp>
   )
+}
+
+const TodoProvider = ({ children }: { children: React.ReactNode }) => {
+  const todo = useTodo()
+  return <TodoContext.Provider value={todo}>{children}</TodoContext.Provider>
 }
 
 export default App
