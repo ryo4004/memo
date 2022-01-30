@@ -11,6 +11,7 @@ import {
   IonToolbar,
   // useIonViewWillEnter,
   IonNote,
+  IonButton,
 } from '@ionic/react'
 import { useParams } from 'react-router'
 
@@ -46,6 +47,9 @@ export const Detail = () => {
             <div>{todo.label}</div>
             <div>{todo.span}</div>
             <div>{todo.lastDate ? todo.lastDate.toFormat('yyyy/M/d') : 'なし'}</div>
+            <IonButton expand="block" fill="outline" color="danger">
+              削除
+            </IonButton>
           </>
         )}
       </IonContent>
