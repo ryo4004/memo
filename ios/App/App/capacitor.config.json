@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "memo",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}
