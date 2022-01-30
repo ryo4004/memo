@@ -1,12 +1,40 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext, createContext } from 'react'
 import { DateTime } from 'luxon'
 
+import { noop } from '../utilities/noop'
 import * as storage from '../utilities/storage'
 
 const STORAGE_KEY = 'todolist'
 
+type State = {
+  todoList: Array<Todo>
+  todoInput: TodoInput
+}
+
+type TodoType = State & {
+  addTodo: () => boolean
+  removeTodo: (id: number) => void
+  updateInput: (type: InputType, value: string | null | undefined) => void
+}
+
+const initState = {
+  todoList: [],
+  todoInput: { label: '', span: '', lastDate: '' },
+}
+
+export const TodoContext = createContext<TodoType>({
+  ...initState,
+  addTodo: () => false,
+  removeTodo: noop,
+  updateInput: noop,
+})
+
+export const useTodoContext = () => {
+  return useContext(TodoContext)
+}
+
 type Todo = {
-  id: string
+  id: number
   label: string
   span: number
   lastDate: DateTime | null
@@ -22,7 +50,7 @@ type InputType = keyof TodoInput
 
 const initInput: TodoInput = { label: '', span: '', lastDate: '' }
 
-export const useTodo = () => {
+export const useTodo = (): TodoType => {
   const [todoList, setTodoList] = useState<Array<Todo>>([])
   const [todoInput, setTodoInput] = useState<TodoInput>(initInput)
 
@@ -54,7 +82,7 @@ export const useTodo = () => {
   const addTodo = () => {
     if (todoInput.label !== '') {
       const newTodo = {
-        id: String(new Date().getTime()),
+        id: new Date().getTime(),
         label: todoInput.label,
         span: Number(todoInput.span),
         lastDate: DateTime.fromFormat(todoInput.lastDate, 'yyyy-M-d'),
@@ -66,10 +94,12 @@ export const useTodo = () => {
       })
       setTodoInput(initInput)
       return true
+    } else {
+      return false
     }
   }
 
-  const removeTodo = (id: string) => {
+  const removeTodo = (id: number) => {
     const newTodoList = todoList.filter((todo) => todo.id !== id)
     setTodoList(newTodoList)
   }
