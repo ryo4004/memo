@@ -15,12 +15,13 @@ import {
   useIonAlert,
 } from '@ionic/react'
 import { useParams } from 'react-router'
+import type { RouteComponentProps } from 'react-router'
 
 import { useTodoContext } from '../../../hooks/useTodo'
 
 import styles from './Detail.module.scss'
 
-export const Detail = () => {
+export const Detail = (props: RouteComponentProps) => {
   const params = useParams<{ id: string }>()
   const id = Number(params.id)
 
@@ -56,7 +57,16 @@ export const Detail = () => {
                   cssClass: 'alert',
                   header: '削除しますか？',
                   message: '特になし',
-                  buttons: ['キャンセル', { text: '削除する', handler: () => removeTodo(todo.id) }],
+                  buttons: [
+                    'キャンセル',
+                    {
+                      text: '削除する',
+                      handler: async () => {
+                        removeTodo(todo.id)
+                        props.history.goBack()
+                      },
+                    },
+                  ],
                   onDidDismiss: () => null,
                 })
               }

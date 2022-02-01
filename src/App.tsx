@@ -49,9 +49,7 @@ const App: React.FC = () => {
         <IonReactRouter>
           <IonTabs>
             <IonRouterOutlet ref={routerRef}>
-              <Route path="/detail/:id">
-                <Detail />
-              </Route>
+              <Route path="/detail/:id" render={(props) => <Detail {...props} />}></Route>
               <Route exact path="/todolist" render={() => <TodoList router={routerRef.current} />} />
               <Route exact path="/stocklist">
                 <Stock />
