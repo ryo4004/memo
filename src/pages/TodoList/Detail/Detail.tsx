@@ -11,19 +11,24 @@ import {
   IonToolbar,
   // useIonViewWillEnter,
   IonNote,
+  IonButton,
+  useIonAlert,
 } from '@ionic/react'
 import { useParams } from 'react-router'
+import type { RouteComponentProps } from 'react-router'
 
 import { useTodoContext } from '../../../hooks/useTodo'
 
 import styles from './Detail.module.scss'
 
-export const Detail = () => {
+export const Detail = (props: RouteComponentProps) => {
   const params = useParams<{ id: string }>()
   const id = Number(params.id)
 
-  const { todoList } = useTodoContext()
+  const { todoList, removeTodo } = useTodoContext()
   const todo = todoList.find((todo) => todo.id === id)
+
+  const [present] = useIonAlert()
 
   return (
     <IonPage>
@@ -46,6 +51,31 @@ export const Detail = () => {
             <div>{todo.label}</div>
             <div>{todo.span}</div>
             <div>{todo.lastDate ? todo.lastDate.toFormat('yyyy/M/d') : 'なし'}</div>
+            <IonButton
+              onClick={() =>
+                present({
+                  cssClass: 'alert',
+                  header: '削除しますか？',
+                  message: '特になし',
+                  buttons: [
+                    'キャンセル',
+                    {
+                      text: '削除する',
+                      handler: async () => {
+                        removeTodo(todo.id)
+                        props.history.goBack()
+                      },
+                    },
+                  ],
+                  onDidDismiss: () => null,
+                })
+              }
+              expand="block"
+              fill="outline"
+              color="danger"
+            >
+              削除
+            </IonButton>
           </>
         )}
       </IonContent>

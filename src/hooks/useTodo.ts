@@ -102,6 +102,9 @@ export const useTodo = (): TodoType => {
   const removeTodo = (id: number) => {
     const newTodoList = todoList.filter((todo) => todo.id !== id)
     setTodoList(newTodoList)
+    storage.setData(STORAGE_KEY, {
+      list: newTodoList.map((l) => ({ ...l, lastDate: l.lastDate ? l.lastDate.toMillis() : null })),
+    })
   }
 
   return { todoList, addTodo, removeTodo, todoInput, updateInput }
