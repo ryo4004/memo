@@ -17,6 +17,8 @@ export const AddModal: React.FC<Props> = ({ router, showModal, setShowModal }) =
 
   const modalProps = { showModal, router, setShowModal }
 
+  const isButtonDisabled = todoInput.label === '' || todoInput.span === ''
+
   return (
     <Modal {...modalProps}>
       <IonItem>
@@ -39,6 +41,7 @@ export const AddModal: React.FC<Props> = ({ router, showModal, setShowModal }) =
             }
           }}
           expand="block"
+          disabled={isButtonDisabled}
           className={styles.button}
         >
           追加
