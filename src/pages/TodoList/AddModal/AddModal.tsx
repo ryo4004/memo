@@ -4,6 +4,8 @@ import { Modal } from '../../../components/Modal'
 
 import { useTodoContext } from '../../../hooks/useTodo'
 
+import styles from './AddModal.module.scss'
+
 interface Props {
   router: HTMLIonRouterOutletElement | null
   showModal: boolean
@@ -14,6 +16,8 @@ export const AddModal: React.FC<Props> = ({ router, showModal, setShowModal }) =
   const { addTodo, todoInput, updateInput } = useTodoContext()
 
   const modalProps = { showModal, router, setShowModal }
+
+  const isButtonDisabled = todoInput.label === '' || todoInput.span === ''
 
   return (
     <Modal {...modalProps}>
@@ -29,16 +33,20 @@ export const AddModal: React.FC<Props> = ({ router, showModal, setShowModal }) =
         <IonLabel position="stacked">最後の実施日</IonLabel>
         <IonInput type="date" value={todoInput.lastDate} onIonChange={(e) => updateInput('lastDate', e.detail.value)} />
       </IonItem>
-      <IonButton
-        onClick={() => {
-          if (addTodo()) {
-            setShowModal(false)
-          }
-        }}
-        expand="block"
-      >
-        追加
-      </IonButton>
+      <div>
+        <IonButton
+          onClick={() => {
+            if (addTodo()) {
+              setShowModal(false)
+            }
+          }}
+          expand="block"
+          disabled={isButtonDisabled}
+          className={styles.button}
+        >
+          追加
+        </IonButton>
+      </div>
     </Modal>
   )
 }
