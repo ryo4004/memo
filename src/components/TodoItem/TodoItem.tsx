@@ -1,4 +1,5 @@
 import { IonLabel, IonItem, IonCard, IonBadge } from '@ionic/react'
+import { DateTime } from 'luxon'
 
 import type { Todo } from '../../hooks/useTodo'
 
@@ -11,7 +12,7 @@ type Props = {
 export const TodoItem = (props: Props) => {
   const { todo } = props
   return (
-    <IonCard key={todo.id} routerLink={'/detail/' + todo.id}>
+    <IonCard routerLink={'/detail/' + todo.id}>
       <IonItem lines="full">
         <IonLabel>{todo.label}</IonLabel>
       </IonItem>
@@ -29,7 +30,20 @@ export const TodoItem = (props: Props) => {
           </IonBadge>
           <IonLabel className={styles.label}>{todo.lastDate && todo.lastDate.toFormat('yyyy/M/d')}</IonLabel>
         </IonItem>
+        {todo.lastDate && todo.span && <NextActiveDate beforeDate={todo.lastDate} span={todo.span} />}
       </div>
     </IonCard>
+  )
+}
+
+const NextActiveDate = ({ beforeDate, span }: { beforeDate: DateTime; span: number }) => {
+  const nextDate = beforeDate.plus({ days: span })
+  return (
+    <IonItem lines="none">
+      <IonBadge className={styles.badge} color="medium">
+        次回実施日
+      </IonBadge>
+      <IonLabel className={styles.label}>{nextDate.toFormat('yyyy/M/d')}</IonLabel>
+    </IonItem>
   )
 }
