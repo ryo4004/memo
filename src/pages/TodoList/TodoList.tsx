@@ -8,15 +8,12 @@ import {
   IonButtons,
   IonIcon,
   IonButton,
-  IonLabel,
-  IonItem,
-  IonCard,
-  IonCardContent,
   IonNote,
 } from '@ionic/react'
 import { addOutline } from 'ionicons/icons'
 
 import { AddModal } from './AddModal/AddModal'
+import { TodoItem } from '../../components/TodoItem/TodoItem'
 
 import { useTodoContext } from '../../hooks/useTodo'
 
@@ -63,23 +60,7 @@ export const TodoList: React.FC<Props> = ({ router }) => {
             <IonNote>なにもありません</IonNote>
           </div>
         )}
-        {todoList.length !== 0 &&
-          todoList.map((todo) => (
-            <IonCard key={todo.id} routerLink={'/detail/' + todo.id}>
-              <IonItem>
-                <IonLabel>{todo.label}</IonLabel>
-              </IonItem>
-
-              <IonCardContent>
-                <div>
-                  <IonNote>{todo.span}</IonNote>
-                </div>
-                <div>
-                  <IonNote>{todo.lastDate && todo.lastDate.toFormat('yyyy/M/d')}</IonNote>
-                </div>
-              </IonCardContent>
-            </IonCard>
-          ))}
+        {todoList.length !== 0 && todoList.map((todo) => <TodoItem key={todo.id} todo={todo} />)}
       </IonContent>
     </IonPage>
   )
