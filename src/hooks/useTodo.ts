@@ -33,7 +33,7 @@ export const useTodoContext = () => {
   return useContext(TodoContext)
 }
 
-type Todo = {
+export type Todo = {
   id: number
   label: string
   span: number
