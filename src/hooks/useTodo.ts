@@ -7,23 +7,29 @@ import * as storage from '../utilities/storage'
 const STORAGE_KEY = 'todolist'
 
 type State = {
+  roomList: Array<Room>
   todoList: Array<Todo>
   todoInput: TodoInput
 }
 
 type TodoType = State & {
+  addRoom: () => void
+  removeRoom: () => void
   addTodo: () => boolean
   removeTodo: (id: number) => void
   updateInput: (type: InputType, value: string | null | undefined) => void
 }
 
-const initState = {
+const initState: State = {
+  roomList: [],
   todoList: [],
   todoInput: { label: '', span: '', lastDate: '' },
 }
 
 export const TodoContext = createContext<TodoType>({
   ...initState,
+  addRoom: noop,
+  removeRoom: noop,
   addTodo: () => false,
   removeTodo: noop,
   updateInput: noop,
@@ -31,6 +37,11 @@ export const TodoContext = createContext<TodoType>({
 
 export const useTodoContext = () => {
   return useContext(TodoContext)
+}
+
+type Room = {
+  id: number
+  name: string
 }
 
 export type Todo = {
@@ -51,6 +62,7 @@ type InputType = keyof TodoInput
 const initInput: TodoInput = { label: '', span: '', lastDate: '' }
 
 export const useTodo = (): TodoType => {
+  const [roomList, setRoomList] = useState<Array<Room>>([])
   const [todoList, setTodoList] = useState<Array<Todo>>([])
   const [todoInput, setTodoInput] = useState<TodoInput>(initInput)
 
@@ -77,6 +89,14 @@ export const useTodo = (): TodoType => {
       }
       setTodoInput(newInput)
     }
+  }
+
+  const addRoom = () => {
+    setRoomList([])
+  }
+
+  const removeRoom = () => {
+    setRoomList([])
   }
 
   const addTodo = () => {
@@ -107,5 +127,5 @@ export const useTodo = (): TodoType => {
     })
   }
 
-  return { todoList, addTodo, removeTodo, todoInput, updateInput }
+  return { roomList, addRoom, removeRoom, todoList, addTodo, removeTodo, todoInput, updateInput }
 }
