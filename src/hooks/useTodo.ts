@@ -35,9 +35,19 @@ export const useTodoContext = () => {
   return useContext(TodoContext)
 }
 
-type Room = {
+type StringDate = { lastDate: string }
+
+export type StorageType<T> = Omit<T, 'lastDate'> & StringDate
+
+type StorageData = {
+  roomList: Array<StorageType<Room>>
+  todoList: Array<StorageType<Todo>>
+}
+
+export type Room = {
   id: number
   name: string
+  lastDate: DateTime | null
 }
 
 export type Todo = {
@@ -53,14 +63,13 @@ export const useTodo = (): TodoType => {
   useEffect(() => {
     // eslint-disable-next-line
     ;(async () => {
-      const storageData = await storage.getData(STORAGE_KEY)
+      const storageData = await storage.getObject<StorageData>(STORAGE_KEY)
       if (storageData) {
-        const parsedData: { list: Array<Todo> } = JSON.parse(storageData)
-        const newList = parsedData.list.map((todo) => ({
-          ...todo,
-          lastDate: todo.lastDate ? DateTime.fromMillis(Number(todo.lastDate)) : null,
-        }))
-        setState((state) => ({ ...state, todoList: newList }))
+        const newState = {
+          roomList: storage.timeConvertToDateTime<StorageType<Room>>(storageData.roomList),
+          todoList: storage.timeConvertToDateTime<StorageType<Todo>>(storageData.todoList),
+        }
+        setState((state) => ({ ...state, ...newState }))
       }
     })()
   }, [])
@@ -74,20 +83,22 @@ export const useTodo = (): TodoType => {
   }
 
   const addTodo = (validatedInput: Todo) => {
-    const newList = [...state.todoList, validatedInput]
-    storage.setData(STORAGE_KEY, {
-      list: newList.map((l) => ({ ...l, lastDate: l.lastDate ? l.lastDate.toMillis() : null })),
-    })
-    setState((state) => ({ ...state, todoList: newList }))
+    const newState = {
+      ...state,
+      todoList: [...state.todoList, validatedInput],
+    }
+    storage.setObject(STORAGE_KEY, newState)
+    setState((state) => ({ ...state, ...newState }))
     return true
   }
 
   const removeTodo = (id: number) => {
-    const newTodoList = state.todoList.filter((todo) => todo.id !== id)
-    setState((state) => ({ ...state, todoList: newTodoList }))
-    storage.setData(STORAGE_KEY, {
-      list: newTodoList.map((l) => ({ ...l, lastDate: l.lastDate ? l.lastDate.toMillis() : null })),
-    })
+    const newState = {
+      ...state,
+      todoList: state.todoList.filter((todo) => todo.id !== id),
+    }
+    setState((state) => ({ ...state, ...newState }))
+    storage.setObject(STORAGE_KEY, newState)
   }
 
   return {
