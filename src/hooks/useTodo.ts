@@ -6,6 +6,19 @@ import * as storage from '../utilities/storage'
 
 const STORAGE_KEY = 'todolist'
 
+export type Room = {
+  id: number
+  name: string
+  lastDate: DateTime | null
+}
+
+export type Todo = {
+  id: number
+  label: string
+  span: number
+  lastDate: DateTime | null
+}
+
 type State = {
   roomList: Array<Room>
   todoList: Array<Todo>
@@ -44,19 +57,6 @@ type StorageData = {
   todoList: Array<StorageType<Todo>>
 }
 
-export type Room = {
-  id: number
-  name: string
-  lastDate: DateTime | null
-}
-
-export type Todo = {
-  id: number
-  label: string
-  span: number
-  lastDate: DateTime | null
-}
-
 export const useTodo = (): TodoType => {
   const [state, setState] = useState<State>(initState)
 
@@ -87,8 +87,8 @@ export const useTodo = (): TodoType => {
       ...state,
       todoList: [...state.todoList, validatedInput],
     }
-    storage.setObject(STORAGE_KEY, newState)
     setState((state) => ({ ...state, ...newState }))
+    storage.setObjectWithArray(STORAGE_KEY, newState)
     return true
   }
 
@@ -98,7 +98,7 @@ export const useTodo = (): TodoType => {
       todoList: state.todoList.filter((todo) => todo.id !== id),
     }
     setState((state) => ({ ...state, ...newState }))
-    storage.setObject(STORAGE_KEY, newState)
+    storage.setObjectWithArray(STORAGE_KEY, newState)
   }
 
   return {

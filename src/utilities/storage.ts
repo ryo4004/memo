@@ -20,6 +20,25 @@ export const setObject = async (key: string, value: object) => {
   return await setData(key, JSON.stringify(value))
 }
 
+type ObjectWithArray = {
+  [key: string]: Array<LastDate>
+}
+
+interface LastDate {
+  lastDate: DateTime | null
+}
+
+interface LastDateString {
+  lastDate: string
+}
+interface LastDateNumber {
+  lastDate: number | null
+}
+
+export const setObjectWithArray = async (key: string, object: ObjectWithArray) => {
+  return await setObject(key, convertObjectWithArray(object))
+}
+
 export const getObject = async <T>(key: string): Promise<T | null> => {
   const value = await getData(key)
   if (!value) {
@@ -32,18 +51,23 @@ export const getObject = async <T>(key: string): Promise<T | null> => {
 export const removeObject = async (key: string) => await removeData(key)
 
 // リスト用関数
-export const timeConvertToDateTime = <T>(
-  array: Array<T & { lastDate: string }>
-): Array<T & { lastDate: DateTime | null }> => {
+export const timeConvertToDateTime = <T extends LastDateString>(array: Array<T>): Array<T & LastDate> => {
   return array.map((value) => ({
     ...value,
     lastDate: value.lastDate ? DateTime.fromMillis(Number(value.lastDate)) : null,
   }))
 }
 
-export const timeConvertToMillis = <T>(array: Array<T & { lastDate?: DateTime }>) => {
+export const timeConvertToMillis = <T extends LastDate>(array: Array<T>): Array<T & LastDateNumber> => {
   return array.map((value) => ({
     ...value,
     lastDate: value.lastDate ? value.lastDate.toMillis() : null,
   }))
+}
+
+export const convertObjectWithArray = (object: ObjectWithArray) => {
+  const array = (Object.keys(object) as (keyof ObjectWithArray)[]).map((key) => {
+    return [key, timeConvertToMillis(object[key])]
+  })
+  return Object.fromEntries(array)
 }
